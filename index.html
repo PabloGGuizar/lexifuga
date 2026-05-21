@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Encuentra anagramas y palabras a partir de tus letras con Lexífuga" />
+    <title>Lexífuga - Centrífuga de Palabras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <header style="position: relative;">
+        <div class="top-controls">
+          <button id="theme-toggle" class="icon-btn" title="Cambiar tema">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+          <button id="help-btn" class="icon-btn" title="Ayuda">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </button>
+          <div class="lang-selector">
+            <button id="lang-es" class="lang-btn active">ES</button>
+            <button id="lang-ca" class="lang-btn">CA</button>
+          </div>
+        </div>
+        <h1 data-i18n="title">LexífugaES</h1>
+        <p class="subtitle" data-i18n="subtitle">Centrífuga de Palabras en español</p>
+      </header>
+
+      <main>
+        <div class="controls-card glass-panel">
+          <div class="input-group">
+            <input 
+              type="text" 
+              id="word-input" 
+              placeholder="Escribe una palabra..." 
+              autocomplete="off"
+              maxlength="9"
+              data-i18n-placeholder="placeholder"
+            />
+            <div class="input-hint" data-i18n="input-hint">Entre 3 y 9 letras</div>
+          </div>
+
+          <div class="toggle-group" style="margin-bottom: 1rem;">
+            <span class="toggle-label" id="label-all" data-i18n="label-all">Por longitud</span>
+            <label class="switch">
+              <input type="checkbox" id="anagram-toggle">
+              <span class="slider round"></span>
+            </label>
+            <span class="toggle-label highlight" id="label-anagram" data-i18n="label-anagram">Solo Anagramas</span>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="toggle-label" data-i18n="label-slider">Rango de letras:</label>
+              <span id="length-display" class="highlight">3/9 letras</span>
+            </div>
+            <div class="range-slider-container">
+              <div class="range-slider-track" id="slider-track"></div>
+              <input type="range" id="length-slider-min" min="3" max="9" value="3" disabled>
+              <input type="range" id="length-slider-max" min="3" max="9" value="9" disabled>
+            </div>
+            <div class="slider-labels">
+              <span>3</span>
+              <span id="slider-max-label">9</span>
+            </div>
+          </div>
+
+          <button id="spin-btn" class="glow-btn" disabled>
+            <span data-i18n="btn-lexifugar">Lexifugar</span>
+            <div class="btn-glow"></div>
+          </button>
+        </div>
+
+        <div class="centrifuge-container" id="centrifuge-container">
+          <div class="centrifuge-ring"></div>
+          <div class="centrifuge-letters" id="centrifuge-letters"></div>
+        </div>
+
+        <div class="results-container glass-panel hidden" id="results-container">
+          <div class="results-header">
+            <h2 data-i18n="results-title">Resultados</h2>
+            <span class="results-count" id="results-count">0 encontradas</span>
+          </div>
+          <div class="results-content" id="results-content">
+            <!-- Results will be injected here -->
+          </div>
+        </div>
+      </main>
+      
+      <footer class="app-footer">
+        <p data-i18n="footer-text">© 2026 Lexífuga — Desarrollado por <a href="https://www.linkedin.com/in/pablogguizar/" target="_blank" rel="noopener noreferrer">Pablo G. Guízar</a>. Código abierto bajo licencia MIT disponible en <a href="https://github.com/PabloGGuizar/lexifuga" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+      </footer>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal-overlay hidden">
+      <div class="modal-content glass-panel">
+        <h2 data-i18n="help-title" style="margin-bottom: 1rem;">¿Cómo funciona Lexífuga?</h2>
+        <div class="modal-body">
+          <p data-i18n="help-p1">Lexífuga encuentra todas las palabras reales que se pueden formar con las letras que escribas.</p>
+          <ul style="text-align: left; margin: 1rem 0; padding-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem;">
+            <li data-i18n="help-li1" style="margin-bottom: 0.5rem;"><strong>Por longitud:</strong> Busca palabras usando cualquier subconjunto de tus letras (ej. con "ROCA" encuentra "OCA", "CARO", etc).</li>
+            <li data-i18n="help-li2"><strong>Solo Anagramas:</strong> Busca palabras usando EXACTAMENTE todas las letras ingresadas (ej. con "ROCA" encuentra "CARO" y "ARCO").</li>
+          </ul>
+          <p data-i18n="help-p2">También te mostramos un dato estadístico sobre cuántas permutaciones matemáticas posibles existen frente a las que realmente son palabras válidas.</p>
+        </div>
+        <button id="close-help" class="glow-btn" style="margin-top: 1.5rem; font-size: 1rem; padding: 0.6rem 1.5rem;" data-i18n="help-close">Entendido</button>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

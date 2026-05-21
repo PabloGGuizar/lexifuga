@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Input Validation
   wordInput.addEventListener('input', (e) => {
-    let value = e.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]/g, '');
+    let value = e.target.value.replace(/[^a-zA-ZñÑçÇáéíóúÁÉÍÓÚüÜàèïòÀÈÏÒ·]/g, '');
     e.target.value = value;
     
     if (value.length >= 3 && value.length <= 9) {

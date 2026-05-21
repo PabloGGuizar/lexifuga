@@ -2,7 +2,11 @@ import catalanWords from 'an-array-of-catalan-words';
 import spanishWords from 'an-array-of-spanish-words';
 // Function to remove accents (diacritics) from a string
 function removeAccents(str) {
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, function(match, offset, string) {
+    if (match === '\u0303' && string[offset - 1] === 'n') return match; // keep tilde on n
+    if (match === '\u0327' && string[offset - 1] === 'c') return match; // keep cedilla on c
+    return '';
+  }).normalize("NFC");
 }
 
 // Function to get character frequencies
